@@ -3770,15 +3770,14 @@ define(['exports'], (function (exports) { 'use strict';
     function canConstructResponseFromBodyStream() {
       if (supportStatus === undefined) {
         const testResponse = new Response('');
+        // Default to false and only flip to true when supported.
+        supportStatus = false;
         if ('body' in testResponse) {
           try {
             new Response(testResponse.body);
             supportStatus = true;
-          } catch (error) {
-            supportStatus = false;
-          }
+          } catch (error) {}
         }
-        supportStatus = false;
       }
       return supportStatus;
     }

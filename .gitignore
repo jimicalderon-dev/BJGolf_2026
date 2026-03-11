@@ -1,5 +1,10 @@
 .vercel
 node_modules
+dist
 .env
 .env.*
 !.env.example
+.DS_Store
+.vscode
+*.log
+coveragegit add .gitignore

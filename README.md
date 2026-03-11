@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # BJ 2026 — Golf Tournament App
 
 A luxury mobile web app for the BJ 2026 golf trip at Las Colinas Golf & Country Club Resort (Jun 18–22, 2026). Built with Vite + React + Tailwind CSS + Supabase, installable as a PWA.
@@ -191,3 +192,7 @@ The following tables are configured for real-time updates:
 ## License
 
 Private project — BJ Golf Trip 2026.
+=======
+# BJGolf_2026
+repository for the tournament for BJ2026
+>>>>>>> ca53abdaec5fdc71b468cf257e3d0447da5539a3

@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root {
+    height: 100%;
+  }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: #060e06;
+    color: #e2e8f0;
+    overflow: hidden;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] { -moz-appearance: textfield; }
+}
+
+@layer components {
+  /* Glassmorphism card */
+  .glass {
+    @apply bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl;
+  }
+  .glass-dark {
+    @apply bg-black/30 border border-white/8 backdrop-blur-md rounded-2xl;
+  }
+
+  /* Gold gradient text */
+  .gold-text {
+    background: linear-gradient(135deg, #FFD700, #b8860b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Score circle colors */
+  .sc-eagle  { @apply bg-yellow-400 text-black font-bold; }
+  .sc-birdie { @apply bg-green-500 text-white font-bold; }
+  .sc-par    { @apply bg-white/10 text-slate-400; }
+  .sc-bogey  { @apply bg-orange-500/80 text-white font-bold; }
+  .sc-double { @apply bg-red-500 text-white font-bold; }
+
+  /* Team badges */
+  .badge-a {
+    @apply text-xs font-semibold px-2 py-0.5 rounded-full;
+    background: rgba(34,197,94,0.2);
+    color: #4ade80;
+    border: 1px solid rgba(34,197,94,0.3);
+  }
+  .badge-b {
+    @apply text-xs font-semibold px-2 py-0.5 rounded-full;
+    background: rgba(59,130,246,0.2);
+    color: #60a5fa;
+    border: 1px solid rgba(59,130,246,0.3);
+  }
+
+  /* Avatar circle */
+  .avatar {
+    @apply flex items-center justify-center rounded-full font-bold text-xs shrink-0;
+    width: 32px; height: 32px;
+  }
+  .avatar-a {
+    background: rgba(34,197,94,0.25);
+    color: #4ade80;
+    border: 1.5px solid rgba(34,197,94,0.5);
+  }
+  .avatar-b {
+    background: rgba(59,130,246,0.25);
+    color: #60a5fa;
+    border: 1.5px solid rgba(59,130,246,0.5);
+  }
+
+  /* Gold pulsing border for leader */
+  .leader-border {
+    border: 1.5px solid #FFD700;
+    box-shadow: 0 0 12px rgba(255,215,0,0.2);
+  }
+
+  /* Pill tabs */
+  .pill {
+    @apply px-4 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap;
+    background: rgba(255,255,255,0.06);
+    color: #94a3b8;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .pill.active {
+    background: linear-gradient(135deg, #FFD700, #b8860b);
+    color: #000;
+    border-color: transparent;
+  }
+
+  /* Gold gradient button */
+  .btn-gold {
+    @apply px-6 py-3 rounded-xl font-semibold text-black transition-all active:scale-95;
+    background: linear-gradient(135deg, #FFD700, #b8860b);
+  }
+  .btn-gold:hover { filter: brightness(1.1); }
+
+  /* Outline button */
+  .btn-outline {
+    @apply px-4 py-2 rounded-xl font-medium text-sm transition-all active:scale-95;
+    border: 1px solid rgba(255,215,0,0.4);
+    color: #FFD700;
+    background: rgba(255,215,0,0.05);
+  }
+
+  /* Page header */
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    @apply text-2xl font-bold gold-text;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar but allow scrolling */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+  /* Safe area padding for iOS */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+/* ── Countdown animations ─────────────────────────────────────── */
+
+/* Colon pulse between time boxes */
+@keyframes colon-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+.countdown-colon {
+  animation: colon-pulse 1s ease-in-out infinite;
+}
+
+/* Digit flip on change */
+@keyframes digit-flip {
+  0%   { transform: translateY(-6px); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+.countdown-digit {
+  display: inline-block;
+  animation: digit-flip 0.25s ease-out;
+}
+
+/* Green glow for "trip started" state */
+@keyframes green-glow {
+  0%, 100% { box-shadow: 0 0 12px rgba(74,222,128,0.3); }
+  50%       { box-shadow: 0 0 24px rgba(74,222,128,0.6); }
+}
+.glow-green { animation: green-glow 2s ease-in-out infinite; }
+
+/* Gold pulse for "tournament live" state */
+@keyframes gold-pulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(255,215,0,0.3); }
+  50%       { box-shadow: 0 0 28px rgba(255,215,0,0.7); }
+}
+.pulse-gold { animation: gold-pulse 1.5s ease-in-out infinite; }
+
+/* LIVE badge red dot */
+@keyframes live-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.7); }
+}
+.live-dot { animation: live-dot 1s ease-in-out infinite; }
+
+/* Confetti burst (CSS-only) — triggered by .confetti-active class on parent */
+@keyframes confetti-fall {
+  0%   { transform: translateY(-20px) rotate(0deg);   opacity: 1; }
+  100% { transform: translateY(60px)  rotate(360deg); opacity: 0; }
+}
+.confetti-piece {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 2px;
+  animation: confetti-fall 1.2s ease-in forwards;
+}
+.confetti-piece:nth-child(1) { left: 10%; background: #FFD700; animation-delay: 0s; }
+.confetti-piece:nth-child(2) { left: 25%; background: #4ade80; animation-delay: 0.1s; }
+.confetti-piece:nth-child(3) { left: 40%; background: #f87171; animation-delay: 0.05s; }
+.confetti-piece:nth-child(4) { left: 55%; background: #60a5fa; animation-delay: 0.15s; }
+.confetti-piece:nth-child(5) { left: 70%; background: #FFD700; animation-delay: 0.08s; }
+.confetti-piece:nth-child(6) { left: 85%; background: #c084fc; animation-delay: 0.2s; }

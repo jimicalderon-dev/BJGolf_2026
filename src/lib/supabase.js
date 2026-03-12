@@ -16,9 +16,25 @@ export const supabase = isConfigured
 // ── Players ───────────────────────────────────────────────────
 export async function fetchPlayers() {
   if (!supabase) return []
-  const { data, error } = await supabase.from('players').select('*').order('name')
+  const { data, error } = await supabase
+    .from('players')
+    .select('id, name, handicap, team, avatar, created_at')
+    .order('name')
   if (error) { console.error('fetchPlayers:', error.message); return [] }
   return data ?? []
+}
+
+export async function verifyPin(playerId, pin) {
+  const res = await fetch(`${SUPABASE_URL}/functions/v1/verify-pin`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      apikey: SUPABASE_KEY,
+      Authorization: `Bearer ${SUPABASE_KEY}`,
+    },
+    body: JSON.stringify({ player_id: playerId, pin }),
+  })
+  return res.json()
 }
 
 // ── Events ────────────────────────────────────────────────────

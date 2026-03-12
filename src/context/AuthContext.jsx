@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
-import { fetchPlayers } from '../lib/supabase'
+import { fetchPlayers, verifyPin } from '../lib/supabase'
 
 const AuthContext = createContext(null)
 const STORAGE_KEY = 'bj2026_player'
@@ -28,13 +28,12 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = useCallback(async (playerId, pin) => {
-    const p = players.find(pl => pl.id === playerId)
-    if (!p)             return { error: 'Player not found' }
-    if (p.pin_code !== pin) return { error: 'Incorrect PIN — try again' }
-    setPlayer(p)
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(p))
+    const result = await verifyPin(playerId, pin)
+    if (!result.success) return { error: result.error }
+    setPlayer(result.player)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(result.player))
     return { error: null }
-  }, [players])
+  }, [])
 
   const logout = useCallback(() => {
     setPlayer(null)
